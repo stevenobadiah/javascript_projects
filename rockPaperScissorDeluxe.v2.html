@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Rock Paper Scissors</title>
+  <meta charset="UTF-8"/>
+</head>
+    <style>
+
+        body {
+            background-color: #F76C6C;
+        }
+
+        h1 {
+            text-align: center;
+            color: #A8D0E6;
+            font-family: verdana;
+        }
+
+        .userImages * {
+            height: 150px;
+            width: 150px;
+            margin-right: 20px;
+            margin-left: 20px;
+        }
+
+        .computerImg {
+            height: 150px;
+            width: 150px;
+        }
+
+        .imageOptions {
+            width: 100%;
+            flex-direction: row;
+        }
+
+        .userOptions {
+            display: flex;
+            width: 50%;
+            float: left;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        h2 {
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+
+        .header {
+            background-color: #374785;
+            color: #F76C6C;
+            width: 40%;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .computerOptions {
+            display: flex;
+            width: 50%;
+            float: right;
+            flex-direction: column;
+            align-items: center; 
+        }
+
+        .scoreboard {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            height: 50px;
+            padding-top: 10px;
+        }
+
+        .score {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+
+        h3, .playerVictory, .computerVictory {
+            margin-right: 20px;
+            font-family: "verdana";
+            font-size: 30px;
+        }
+
+        .round, .outcome {
+            font-family: "verdana";
+            font-size: 30px;
+        }
+
+        .ref {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .fighterImg {
+            height: 300px;
+            width: 200px;
+        }
+
+        .fight {
+            width: 100%;
+            flex-direction: row;
+        }
+
+        .playerFighter {
+            display: flex;
+            width: 50%;
+            float: left;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .computerFighter {
+            display: flex;
+            width: 50%;
+            float: right;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .healthBarOutline {
+            background-color: #F8E9A1;
+            width: 210px;
+            margin-bottom: 10px;
+        }
+
+        .healthBar {
+            background-color: #374785;
+            width: 210px;
+            height: 20px
+        }
+
+        .reset {
+            font-family: "verdana";
+            font-size: 30px;
+            margin-top: 10px;
+        }
+
+        .shake {
+            animation: shake 0.4s;
+        }
+
+        @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(3px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(3px, 1px) rotate(-1deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(1px, 2px) rotate(0deg); }
+            100% { transform: translate(1px, -2px) rotate(-1deg); }
+        }
+
+        .userImg:hover {
+            filter: drop-shadow(1px 1px 7px #fff);
+            cursor: pointer;
+            transform: scale(1.1);
+        }
+
+    </style>
+<body>
+    <h1>ROCK PAPER SCISSORS</h1>
+    <div class="imageOptions">
+        <div class="userOptions">
+            <div class="header">
+                <h2>YOUR CHOICE</h2>
+            </div>
+            <div class="userImages">
+                <img class="userImg" id="rock" src="images/rock.png" alt="rock">
+                <img class="userImg" id="paper" src="images/paper.png" alt="paper">
+                <img class="userImg" id ="scissor" src="images/scissor.png" alt="scissor">
+            </div>
+        </div>
+        <div class="computerOptions">
+            <div class="header">
+                <h2>MY CHOICE</h2>
+            </div>
+            <img class="computerImg" src="images/questionMark.png" alt="player choice image">
+        </div>
+    </div>
+
+
+    <div class="scoreboard">
+        <h3 style="margin-left: 25px;">Player</h3>
+        <div class="score">
+            <div class="playerVictory">0</div>
+            <h3> - </h3>
+            <div class="computerVictory">0</div>
+        </div>
+        <h3>Computer</h3>
+    </div>
+
+    <div class="ref">
+        <div class="round">Round: 0</div>
+        <div class="outcome">Dare you battle me?!</div>
+        <button class="reset">Reset</button>
+    </div>
+
+    <div class="fight">
+        <div class="playerFighter">
+            <div class="healthBarOutline">
+                <div class="healthBar" id="playerHealthBar"></div>
+            </div>
+            <img class="fighterImg" id="playerFighterImg" src="images/player.jpg" alt="player">
+        </div>
+        <div class="computerFighter">
+            <div class="healthBarOutline">
+                <div class="healthBar" id="computerHealthBar"></div>
+            </div>
+            <img class="fighterImg" id="computerFighterImg" src="images/computer.jpg" alt="computer">
+        </div>
+    </div>
+
+
+  <script>
+
+    const rock = document.getElementById('rock');
+    const paper = document.getElementById('paper');
+    const scissor = document.getElementById('scissor');
+    const choices = document.querySelectorAll('.userImages');
+    const round = document.querySelector('.round')
+    const computerChoice = document.querySelector('.computerImg')
+    const playerFighter = document.getElementById('playerFighterImg')
+    const computerFighter = document.getElementById('computerFighterImg')
+    const playerHealth = document.getElementById('playerHealthBar')
+    const computerHealth = document.getElementById('computerHealthBar')
+    const playerVictory = document.querySelector('.playerVictory');
+    const computerVictory = document.querySelector('.computerVictory');
+    const outcome = document.querySelector('.outcome');
+    const reset = document.querySelector('.reset')
+    
+
+    const gameArray = ['rock', 'paper', 'scissor'];
+    let playerVictoryCount = 0
+    let computerVictoryCount = 0
+    let roundCount = 0
+
+    let playerVictoryText = 'OOF, my circuits!';
+    let computerVictoryText = 'HA! Give up while you still can';
+
+    function computerPlay(){
+        let randomIndex = Math.floor(Math.random() * gameArray.length); 
+        let randomChoice = gameArray[randomIndex]
+        
+        if (randomChoice == 'rock') {
+            computerChoice.src = "images/rock.png";
+        } else if (randomChoice == 'paper') {
+            computerChoice.src = "images/paper.png";
+        } else if (randomChoice == 'scissor') {
+            computerChoice.src = "images/scissor.png";
+        }
+
+       return randomChoice;
+    }
+
+    function computerWinRound() {
+        computerVictoryCount += 1;
+        computerVictory.textContent = computerVictoryCount;
+        outcome.textContent = computerVictoryText;
+        playerFighter.classList.toggle("shake", true);
+
+        if (computerVictoryCount == 1) {
+            playerHealth.style = 'width: 140px'
+        } else if (computerVictoryCount == 2) {
+            playerHealth.style = 'width: 70px'
+        } else if (computerVictoryCount == 3) {
+            playerHealth.style = 'width: 0px'
+        }
+    }
+
+    function playerWinRound() {
+        playerVictoryCount += 1;
+        playerVictory.textContent = playerVictoryCount;
+        outcome.textContent = playerVictoryText;
+        computerFighter.classList.toggle("shake", true);
+
+        if (playerVictoryCount == 1) {
+            computerHealth.style = 'width: 140px'
+        } else if (playerVictoryCount == 2) {
+            computerHealth.style = 'width: 70px'
+        } else if (playerVictoryCount == 3) {
+            computerHealth.style = 'width: 0px'
+        }
+    }
+
+    
+    function playRound(playerSelection, computerSelection) {
+        playerFighter.classList.toggle("shake", false);
+        computerFighter.classList.toggle("shake", false);
+        switch (true) {
+            case playerSelection == computerSelection:
+                outcome.textContent = 'It seem\'s we have chosen the same. Coincidence? Perhaps.';
+                break
+            case playerSelection == 'rock' && computerSelection == 'paper':
+                computerWinRound();
+                break
+            case playerSelection == 'rock' && computerSelection == 'scissor':
+                playerWinRound();
+                break
+            case playerSelection == 'paper' && computerSelection == 'scissor':
+                computerWinRound();
+                break
+            case playerSelection == 'paper' && computerSelection == 'rock':
+                playerWinRound();
+                break
+            case playerSelection == 'scissor' && computerSelection == 'rock':
+                computerWinRound();
+                break
+            case playerSelection == 'scissor' && computerSelection == 'paper':
+                playerWinRound();
+                break
+        }
+        
+        roundCount += 1
+        round.textContent = `Round: ${roundCount}`
+
+
+        if (roundCount == 10 || playerVictoryCount == 3 || computerVictoryCount == 3) {
+            choices.forEach((button) => {
+                button.removeEventListener('click', game);
+            });
+            if (playerVictoryCount == 3) {
+                outcome.textContent = 'NOOOoooOOoOOooOOOOOoooooooo';
+            } else if (computerVictoryCount == 3) {
+                outcome.textContent = 'I supposed you were a worthy opponent. I suppose I supposed wrong.';
+            } else {
+                outcome.textContent = 'These battles have exhausted us. Shall we be friends, or shall we start another game?';
+            }
+        }   
+    }
+
+    function game(e) {
+        let playerSelection = e.target.alt;
+        let computerSelection = computerPlay();
+        console.log(playRound(playerSelection, computerSelection));  
+    }
+
+    choices.forEach((button) => {
+        button.addEventListener('click', game);
+    });
+
+    reset.addEventListener('click', () => {
+        playerVictoryCount = 0;
+        computerVictoryCount = 0;
+        roundCount = 0;
+        round.textContent = 'Round: 0'
+        playerHealth.style = 'width: 210px'
+        computerHealth.style = 'width: 210px'
+        computerChoice.src = "images/questionMark.png";
+        playerVictory.textContent = playerVictoryCount;
+        computerVictory.textContent = computerVictoryCount;
+        outcome.textContent = "Your move, cabron";
+
+        choices.forEach((button) => {
+            button.addEventListener('click', game);
+        });
+    });
+
+
+
+  </script>
+</body>
+</html>
